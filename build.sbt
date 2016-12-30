@@ -5,6 +5,11 @@ import com.typesafe.tools.mima.plugin.MimaKeys.{
   binaryIssueFilters, previousArtifacts
 }
 
+val specs2Test = Seq(
+  "specs2-core",
+  "specs2-junit"
+).map("org.specs2" %% _ % "3.8.6" % Test)
+
 lazy val acolyteVersion = "1.0.43-j7p"
 
 lazy val `anorm-tokenizer` = project
@@ -77,10 +82,7 @@ lazy val anorm = project
       "com.h2database" % "h2" % "1.4.182" % Test,
       "org.eu.acolyte" %% "jdbc-scala" % acolyteVersion % Test,
       "com.chuusai" %% "shapeless" % "2.3.2" % Test
-    ) ++ Seq(
-      "specs2-core",
-      "specs2-junit"
-    ).map("org.specs2" %% _ % "3.8.6" % Test)
+    ) ++ specs2Test
   }).dependsOn(`anorm-tokenizer`)
 
 lazy val `anorm-iteratee` = (project in file("iteratee"))
@@ -91,10 +93,7 @@ lazy val `anorm-iteratee` = (project in file("iteratee"))
     libraryDependencies ++= Seq(
       "com.typesafe.play" %% "play-iteratees" % "2.6.1",
       "org.eu.acolyte" %% "jdbc-scala" % acolyteVersion % Test      
-    ) ++ Seq(
-      "specs2-core",
-      "specs2-junit"
-    ).map("org.specs2" %% _ % "3.8.6" % Test)
+    ) ++ specs2Test
   ).dependsOn(anorm)
 
 lazy val `anorm-akka` = (project in file("akka"))
@@ -110,10 +109,7 @@ lazy val `anorm-akka` = (project in file("akka"))
       "com.typesafe.akka" %% "akka-testkit" % "2.4.16" % "provided",
       "com.typesafe.akka" %% "akka-stream" % "2.4.16" % "provided",
       "org.eu.acolyte" %% "jdbc-scala" % acolyteVersion % Test
-    ) ++ Seq(
-      "specs2-core",
-      "specs2-junit"
-    ).map("org.specs2" %% _ % "3.8.6" % Test) ++ Seq(
+    ) ++ specs2Test ++ Seq(
       "com.typesafe.akka" %% "akka-stream-contrib" % "0.6" % Test)
   ).dependsOn(anorm)
 
